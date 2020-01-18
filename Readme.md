@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Кухаренко](https://up.htmlacademy.ru/javascript/19/user/515537).
-* Наставник: `Неизвестно`.
+* Наставник: [Руфат Хасларов] (https://htmlacademy.ru/profile/id372587).
 
 ---
 
