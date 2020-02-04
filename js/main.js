@@ -1,11 +1,14 @@
 'use strict';
 
-var apartments = ['palace', 'flat', 'house', 'bungalo'];
-var times = ['12:00', '13:00', '14:00'];
-var featureList = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var photoList = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+var APARTMENTS = ['palace', 'flat', 'house', 'bungalo'];
+var TIMES = ['12:00', '13:00', '14:00'];
+var PIN_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var PIN_PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var MAX_PIN = 8;
+var X_AXIS_OFFSET = 25;
+var Y_AXIS_OFFSET = 70;
 
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
@@ -16,23 +19,18 @@ var similarPinTemplate = document.querySelector('#pin')
   .content
   .querySelector('.map__pin');
 
-var getRangeNumber = function (min, max) {
+var getRandomNumberInRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 var getRandomNumber = function (arr) {
-  for (var i = 0; i < arr.length; i++) {
-    var randomNumber = arr[Math.floor(Math.random() * arr.length)];
-  }
-  return randomNumber;
+  return arr[Math.floor(Math.random() * arr.length)];
 };
 
 var getElementList = function (arr) {
   var elements = [];
-  var numberToCompare = Math.floor(Math.random() * arr.length);
-  for (var i = 0; i <= numberToCompare; i++) {
-    var element = arr[i];
-    elements.push(element);
+  for (var i = 0; i <= arr.length; i++) {
+    elements.push(getRandomNumber(arr));
   }
   return elements;
 };
@@ -43,7 +41,11 @@ var getMapWidth = function () {
 
 var createAnnouncement = function () {
   var announcementList = [];
-  for (var i = 1; i <= 8; i++) {
+  for (var i = 1; i <= MAX_PIN; i++) {
+
+    var coordinateX = getRandomNumberInRange(0, getMapWidth());
+    var coordinateY = getRandomNumberInRange(130, 630);
+
     var announcement = {
       author: {
         avatar: 'img/avatars/user' + '0' + i + '.png',
@@ -51,21 +53,21 @@ var createAnnouncement = function () {
 
       offer: {
         title: 'Заголовок объявления',
-        address: '600, 350',
-        price: getRangeNumber(10000, 100000),
-        type: getRandomNumber(apartments),
+        address: 'coordinateX, coordinateY',
+        price: getRandomNumberInRange(10000, 100000),
+        type: getRandomNumber(APARTMENTS),
         rooms: 4,
         guests: 10,
-        checkin: getRandomNumber(times),
-        checkout: getRandomNumber(times),
-        features: getElementList(featureList),
+        checkin: getRandomNumber(TIMES),
+        checkout: getRandomNumber(TIMES),
+        features: getElementList(PIN_FEATURES),
         description: 'Здесь будет описание вашего уютного жилища',
-        photos: getElementList(photoList),
+        photos: getElementList(PIN_PHOTOS),
       },
 
       location: {
-        x: getRangeNumber(0, getMapWidth()),
-        y: getRangeNumber(130, 630),
+        x: coordinateX,
+        y: coordinateY,
       }
     };
     announcementList.push(announcement);
@@ -78,8 +80,8 @@ var announcements = createAnnouncement();
 var renderPin = function (pin) {
   var pinElement = similarPinTemplate.cloneNode(true);
 
-  pinElement.style.left = pin.location.x + 'px';
-  pinElement.style.top = pin.location.y + 'px';
+  pinElement.style.left = pin.location.x + X_AXIS_OFFSET + 'px';
+  pinElement.style.top = pin.location.y + Y_AXIS_OFFSET + 'px';
   pinElement.querySelector('img').src = pin.author.avatar;
   pinElement.querySelector('img').alt = pin.offer.title;
 
