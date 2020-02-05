@@ -23,14 +23,14 @@ var getRandomNumberInRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-var getRandomNumber = function (arr) {
+var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 
-var getElementList = function (arr) {
+var getRandomArray = function (arr) {
   var elements = [];
   for (var i = 0; i <= arr.length; i++) {
-    elements.push(getRandomNumber(arr));
+    elements.push(getRandomElement(arr));
   }
   return elements;
 };
@@ -53,16 +53,16 @@ var createAnnouncement = function () {
 
       offer: {
         title: 'Заголовок объявления',
-        address: 'coordinateX, coordinateY',
+        address: coordinateX + ',' + coordinateY,
         price: getRandomNumberInRange(10000, 100000),
-        type: getRandomNumber(APARTMENTS),
+        type: getRandomElement(APARTMENTS),
         rooms: 4,
         guests: 10,
-        checkin: getRandomNumber(TIMES),
-        checkout: getRandomNumber(TIMES),
-        features: getElementList(PIN_FEATURES),
+        checkin: getRandomElement(TIMES),
+        checkout: getRandomElement(TIMES),
+        features: getRandomArray(PIN_FEATURES),
         description: 'Здесь будет описание вашего уютного жилища',
-        photos: getElementList(PIN_PHOTOS),
+        photos: getRandomArray(PIN_PHOTOS),
       },
 
       location: {
