@@ -19,6 +19,10 @@ var similarPinTemplate = document.querySelector('#pin')
   .content
   .querySelector('.map__pin');
 
+var similarAnnouncementCardTemplate = document.querySelector('#card')
+  .content
+  .querySelector('.map__card');
+
 var getRandomNumberInRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
@@ -97,3 +101,55 @@ var renderPins = function () {
 };
 
 similarListPin.appendChild(renderPins());
+
+var renderAnnouncementCard = function (card) {
+  var cardElement = similarAnnouncementCardTemplate.cloneNode(true);
+
+  cardElement.querySelector('.popup__avatar').src = card.author.avatar;
+
+  cardElement.querySelector('.popup__title').textContent = card.offer.title;
+  cardElement.querySelector('.popup__text--address').textContent = card.offer.address;
+  cardElement.querySelector('.popup__text--price').textContent = card.offer.price + '₽/ночь';
+
+  if (card.offer.type === 'flat') {
+    cardElement.querySelector('.popup__type').textContent = 'Квартира';
+  } else if (card.offer.type === 'bungalo') {
+    cardElement.querySelector('.popup__type').textContent = 'Бунгало';
+  } else if (card.offer.type === 'house') {
+    cardElement.querySelector('.popup__type').textContent = 'Дом';
+  } else if (card.offer.type === 'palace') {
+    cardElement.querySelector('.popup__type').textContent = 'Двоец';
+  }
+  cardElement.querySelector('.popup__text--capacity')
+    .textContent = card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей';
+  cardElement.querySelector('.popup__text--time')
+    .textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
+
+  for (var i = 0; i < card.offer.features.length; i++) {
+    if (card.offer.features[i] === 'wifi') {
+      cardElement.querySelector('.popup__feature--wifi').textContent = card.offer.features[i];
+    } else if (card.offer.features[i] === 'dishwasher') {
+      cardElement.querySelector('.popup__feature--dishwasher').textContent = card.offer.features[i];
+    } else if (card.offer.features[i] === 'parking') {
+      cardElement.querySelector('.popup__feature--parking').textContent = card.offer.features[i];
+    } else if (card.offer.features[i] === 'washer') {
+      cardElement.querySelector('.popup__feature--washer').textContent = card.offer.features[i];
+    } else if (card.offer.features[i] === 'elevator') {
+      cardElement.querySelector('.popup__feature--elevator').textContent = card.offer.features[i];
+    } else if (card.offer.features[i] === 'conditioner') {
+      cardElement.querySelector('.popup__feature--conditioner').textContent = card.offer.features[i];
+    }
+  }
+
+  var photosList = cardElement.querySelector('.popup__photos');
+  for (var j = 0; j < card.offer.photos.length; j++) {
+    var newPhoto = cardElement.querySelector('.popup__photo').cloneNode(true);
+    newPhoto.src = card.offer.photos[j];
+    photosList.appendChild(newPhoto);
+  }
+
+  cardElement.querySelector('.popup__description').textContent = card.offer.description;
+  return cardElement;
+};
+
+map.appendChild(renderAnnouncementCard(announcements[0]));
