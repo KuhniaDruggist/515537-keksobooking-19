@@ -23,6 +23,8 @@ var similarAnnouncementCardTemplate = document.querySelector('#card')
   .content
   .querySelector('.map__card');
 
+var similarFilters = document.querySelector('.map__filters-container');
+
 var getRandomNumberInRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
@@ -141,15 +143,19 @@ var renderAnnouncementCard = function (card) {
     }
   }
 
+  cardElement.querySelector('.popup__photos').innerHTML = '';
   var photosList = cardElement.querySelector('.popup__photos');
   for (var j = 0; j < card.offer.photos.length; j++) {
-    var newPhoto = cardElement.querySelector('.popup__photo').cloneNode(true);
-    newPhoto.src = card.offer.photos[j];
-    photosList.appendChild(newPhoto);
+    var photoElement = document.createElement('img');
+    photoElement.src = card.offer.photos[j];
+    photoElement.className = 'popup__photo';
+    photoElement.setAttribute('width', '45');
+    photoElement.setAttribute('height', '40');
+    photosList.appendChild(photoElement);
   }
 
   cardElement.querySelector('.popup__description').textContent = card.offer.description;
   return cardElement;
 };
 
-map.appendChild(renderAnnouncementCard(announcements[0]));
+similarFilters.before(renderAnnouncementCard(announcements[0]));
