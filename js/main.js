@@ -124,12 +124,10 @@ var renderAnnouncementCard = function (card) {
   cardElement.querySelector('.popup__type').textContent = TypeOfHouse[card.offer.type];
 
   cardElement.querySelector('.popup__text--capacity')
-    .textContent = (card.offer.rooms && card.offer.guests) ?
-    card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей' : '';
+    .textContent = (card.offer.rooms && card.offer.guests) ? card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей' : '';
 
   cardElement.querySelector('.popup__text--time')
-    .textContent = (card.offer.checkin && card.offer.checkout) ?
-    'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout : '';
+    .textContent = (card.offer.checkin && card.offer.checkout) ? 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout : '';
 
   if (card.offer.features) {
     for (var i = 0; i < card.offer.features.length; i++) {
