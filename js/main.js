@@ -30,27 +30,38 @@ var map = document.querySelector('.map');
 
 var activationButton = map.querySelector('.map__pin--main');
 
-var filterMapForm = document.querySelector('.map__filters');
-
-var filterMapSelect = filterMapForm.querySelectorAll('select');
-filterMapSelect.forEach(function (n) {
-  n.setAttribute('disabled', 'disabled');
-});
-
-var filterMapFieldset = filterMapForm.querySelectorAll('fieldset');
-filterMapFieldset.forEach(function (n) {
-  n.setAttribute('disabled', 'disabled');
-});
+var mapFields = document.querySelector('.map__filters').children;
 
 var newNoticeForm = document.querySelector('.ad-form');
-var newNoticeFieldset = newNoticeForm.querySelectorAll('fieldset');
-newNoticeFieldset.forEach(function (n) {
-  n.setAttribute('disabled', 'disabled');
-});
-var addressInput = newNoticeForm.querySelector('#address');
-addressInput.value = (SOURCE_X_COORDINATA_MAIN_PIN + WIDTH_MAIN_PIN * 0.5)
-+ ', '
-+ (SOURCE_Y_COORDINATA_MAIN_PIN + HEIGHT_MAIN_PIN * 0.5);
+var newNoticeFields = newNoticeForm.children;
+
+var toggleFieldsAvailability = function (elements, status) {
+  Array.from(elements).forEach(function (n) {
+    if (status) {
+      n.setAttribute('disabled', 'disabled');
+    } else {
+      n.removeAttribute('disabled', 'disabled');
+    }
+  });
+};
+
+toggleFieldsAvailability(mapFields, true);
+toggleFieldsAvailability(newNoticeFields, true);
+
+var setAddressValue = function (status) {
+  var addressInput = newNoticeForm.querySelector('#address');
+  if (status === 'inactive') {
+    addressInput.value = (SOURCE_X_COORDINATA_MAIN_PIN + WIDTH_MAIN_PIN * 0.5)
+  + ', '
+  + (SOURCE_Y_COORDINATA_MAIN_PIN + HEIGHT_MAIN_PIN * 0.5);
+  } else if (status === 'active') {
+    addressInput.value = (SOURCE_X_COORDINATA_MAIN_PIN + WIDTH_MAIN_PIN * 0.5)
+  + ', '
+  + (SOURCE_Y_COORDINATA_MAIN_PIN + HEIGHT_MAIN_PIN + HEIGHT_SHARP_MAIN_POINT);
+  }
+};
+
+setAddressValue('inactive');
 
 var similarListPin = document.querySelector('.map__pins');
 
@@ -188,81 +199,66 @@ var renderAnnouncementCard = function (card) {
   return cardElement;
 };
 
-var activatesThePage = function () {
+var activatePage = function () {
   map.classList.remove('map--faded');
   similarListPin.appendChild(renderPins());
   similarFilters.before(renderAnnouncementCard(announcements[0]));
-
-  filterMapSelect.forEach(function (n) {
-    n.removeAttribute('disabled', 'disabled');
-  });
-
-  filterMapFieldset.forEach(function (n) {
-    n.removeAttribute('disabled', 'disabled');
-  });
+  toggleFieldsAvailability(mapFields, false);
+  toggleFieldsAvailability(newNoticeFields, false);
 
   newNoticeForm.classList.remove('ad-form--disabled');
-
-  newNoticeFieldset.forEach(function (n) {
-    n.removeAttribute('disabled', 'disabled');
-  });
-};
-
-var setSharpPointCoordinates = function () {
-  addressInput.value = (SOURCE_X_COORDINATA_MAIN_PIN + WIDTH_MAIN_PIN * 0.5)
-  + ', '
-  + (SOURCE_Y_COORDINATA_MAIN_PIN + HEIGHT_MAIN_PIN + HEIGHT_SHARP_MAIN_POINT);
 };
 
 activationButton.addEventListener('mousedown', function (evt) {
-  if (typeof evt === 'object') {
-    switch (evt.button) {
-      case LEFT_MOUSE_BUTTON:
-        activatesThePage();
-        setSharpPointCoordinates();
-        break;
-    }
+  if (evt.button === LEFT_MOUSE_BUTTON) {
+    activatePage();
+    setAddressValue('active');
   }
 });
 
 activationButton.addEventListener('keydown', function (evt) {
   if (evt.key === ENTER_KEY) {
-    activatesThePage();
-    setSharpPointCoordinates();
+    activatePage();
+    setAddressValue('active');
   }
 });
 
+var GuestInRoom = {
+  1: [2],
+  2: [1, 2],
+  3: [0, 1, 2],
+  100: [3]
+};
 var roomNumber = newNoticeForm.querySelector('#room_number');
 var capacity = newNoticeForm.querySelector('#capacity');
-for (var i = 0; i < capacity.length; i++) {
-  capacity.children[i].setAttribute('disabled', 'disabled');
-}
-capacity.children[2].removeAttribute('disabled', 'disabled');
-capacity.children[2].setAttribute('selected', 'selected');
+
+var disablesAllElements = function (select) {
+  for (var i = 0; i < capacity.length; i++) {
+    select.children[i].setAttribute('disabled', 'disabled');
+    select.children[i].removeAttribute('selected', 'selected');
+  }
+};
+
+var removesAttribute = function (select, currentVal) {
+  for (var i = 0; i < GuestInRoom[currentVal].length; i++) {
+    select.children[GuestInRoom[currentVal][i]].removeAttribute('disabled', 'disabled');
+    select.children[GuestInRoom[currentVal][i]].setAttribute('selected', 'selected');
+  }
+};
 
 roomNumber.addEventListener('change', function () {
   var currentVal = roomNumber.value;
-  for (var j = capacity.children.length - 2; j >= 0; j--) {
-    if (currentVal === '1') {
-      capacity.children[j].setAttribute('disabled', 'disabled');
-      capacity.children[2].removeAttribute('disabled', 'disabled');
-      capacity.children[2].setAttribute('selected', 'selected');
-      capacity.children[capacity.children.length - 1].removeAttribute('selected', 'selected');
-    } else if (currentVal === '2') {
-      capacity.children[j].removeAttribute('disabled', 'disabled');
-      capacity.children[0].setAttribute('disabled', 'disabled');
-      capacity.children[capacity.children.length - 1].setAttribute('disabled', 'disabled');
-      capacity.children[capacity.children.length - 1].removeAttribute('selected', 'selected');
-    } else if (currentVal === '3') {
-      capacity.children[0].setAttribute('disabled', 'disabled');
-      capacity.children[j].removeAttribute('disabled', 'disabled');
-      capacity.children[capacity.children.length - 1].setAttribute('disabled', 'disabled');
-      capacity.children[capacity.children.length - 1].removeAttribute('selected', 'selected');
-
-    } else if (currentVal === '100') {
-      capacity.children[j].setAttribute('disabled', 'disabled');
-      capacity.children[capacity.children.length - 1].removeAttribute('disabled', 'disabled');
-      capacity.children[capacity.children.length - 1].setAttribute('selected', 'selected');
-    }
+  if (currentVal === '1') {
+    disablesAllElements(capacity);
+    removesAttribute(capacity, currentVal);
+  } else if (currentVal === '2') {
+    disablesAllElements(capacity);
+    removesAttribute(capacity, currentVal);
+  } else if (currentVal === '3') {
+    disablesAllElements(capacity);
+    removesAttribute(capacity, currentVal);
+  } else if (currentVal === '100') {
+    disablesAllElements(capacity);
+    removesAttribute(capacity, currentVal);
   }
 });
