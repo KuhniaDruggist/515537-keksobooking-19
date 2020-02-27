@@ -37,31 +37,32 @@ var newNoticeFields = newNoticeForm.children;
 
 var toggleFieldsAvailability = function (elements, status) {
   Array.from(elements).forEach(function (n) {
-    if (status) {
-      n.setAttribute('disabled', 'disabled');
-    } else {
-      n.removeAttribute('disabled', 'disabled');
-    }
+    n.disabled = status;
   });
 };
 
 toggleFieldsAvailability(mapFields, true);
 toggleFieldsAvailability(newNoticeFields, true);
 
+var StatusAddress = {
+  active: true,
+  inactive: false
+};
+
 var setAddressValue = function (status) {
   var addressInput = newNoticeForm.querySelector('#address');
-  if (status === 'inactive') {
+  if (status === StatusAddress.inactive) {
     addressInput.value = (SOURCE_X_COORDINATA_MAIN_PIN + WIDTH_MAIN_PIN * 0.5)
   + ', '
   + (SOURCE_Y_COORDINATA_MAIN_PIN + HEIGHT_MAIN_PIN * 0.5);
-  } else if (status === 'active') {
+  } else if (status === StatusAddress.active) {
     addressInput.value = (SOURCE_X_COORDINATA_MAIN_PIN + WIDTH_MAIN_PIN * 0.5)
   + ', '
   + (SOURCE_Y_COORDINATA_MAIN_PIN + HEIGHT_MAIN_PIN + HEIGHT_SHARP_MAIN_POINT);
   }
 };
 
-setAddressValue('inactive');
+setAddressValue(false);
 
 var similarListPin = document.querySelector('.map__pins');
 
@@ -212,7 +213,7 @@ var activatePage = function () {
 activationButton.addEventListener('mousedown', function (evt) {
   if (evt.button === LEFT_MOUSE_BUTTON) {
     activatePage();
-    setAddressValue('active');
+    setAddressValue(true);
   }
 });
 
@@ -223,42 +224,29 @@ activationButton.addEventListener('keydown', function (evt) {
   }
 });
 
-var GuestInRoom = {
+var GuestsInRoom = {
   1: [2],
-  2: [1, 2],
-  3: [0, 1, 2],
+  2: [2, 1],
+  3: [2, 1, 0],
   100: [3]
 };
-var roomNumber = newNoticeForm.querySelector('#room_number');
-var capacity = newNoticeForm.querySelector('#capacity');
+
+var numberOfRooms = newNoticeForm.querySelector('#room_number');
+var numberOfGuests = newNoticeForm.querySelector('#capacity');
 
 var disablesAllElements = function (select) {
-  for (var i = 0; i < capacity.length; i++) {
+  for (var i = 0; i < select.length; i++) {
     select.children[i].setAttribute('disabled', 'disabled');
     select.children[i].removeAttribute('selected', 'selected');
   }
 };
 
-var removesAttribute = function (select, currentVal) {
-  for (var i = 0; i < GuestInRoom[currentVal].length; i++) {
-    select.children[GuestInRoom[currentVal][i]].removeAttribute('disabled', 'disabled');
-    select.children[GuestInRoom[currentVal][i]].setAttribute('selected', 'selected');
-  }
-};
-
-roomNumber.addEventListener('change', function () {
-  var currentVal = roomNumber.value;
-  if (currentVal === '1') {
-    disablesAllElements(capacity);
-    removesAttribute(capacity, currentVal);
-  } else if (currentVal === '2') {
-    disablesAllElements(capacity);
-    removesAttribute(capacity, currentVal);
-  } else if (currentVal === '3') {
-    disablesAllElements(capacity);
-    removesAttribute(capacity, currentVal);
-  } else if (currentVal === '100') {
-    disablesAllElements(capacity);
-    removesAttribute(capacity, currentVal);
+numberOfRooms.addEventListener('change', function () {
+  var currentVal = numberOfRooms.value;
+  var guests = GuestsInRoom[currentVal];
+  disablesAllElements(numberOfGuests);
+  for (var i = 0; i < guests.length; i++) {
+    numberOfGuests.children[guests[i]].removeAttribute('disabled', 'disabled');
+    numberOfGuests.children[guests[i]].setAttribute('selected', 'selected');
   }
 });
