@@ -1,17 +1,68 @@
 'use strict';
 
 var APARTMENTS = ['palace', 'flat', 'house', 'bungalo'];
+var TypeOfHouse = {
+  flat: 'Квартира',
+  bungalo: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец'
+};
 var TIMES = ['12:00', '13:00', '14:00'];
 var PIN_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PIN_PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+
+var WIDTH_MAIN_PIN = 65;
+var HEIGHT_MAIN_PIN = 65;
+var HEIGHT_SHARP_MAIN_POINT = 22;
+var SOURCE_X_COORDINATA_MAIN_PIN = 570;
+var SOURCE_Y_COORDINATA_MAIN_PIN = 375;
+
 var MAX_PIN = 8;
 var X_AXIS_OFFSET = 25;
 var Y_AXIS_OFFSET = 70;
 
+var ENTER_KEY = 'Enter';
+var LEFT_MOUSE_BUTTON = 0;
+
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+
+var activationButton = map.querySelector('.map__pin--main');
+
+var mapFields = document.querySelector('.map__filters').children;
+
+var newNoticeForm = document.querySelector('.ad-form');
+var newNoticeFields = newNoticeForm.children;
+
+var toggleFieldsAvailability = function (elements, status) {
+  Array.from(elements).forEach(function (n) {
+    n.disabled = status;
+  });
+};
+
+toggleFieldsAvailability(mapFields, true);
+toggleFieldsAvailability(newNoticeFields, true);
+
+var StatusAddress = {
+  active: true,
+  inactive: false
+};
+
+var setAddressValue = function (status) {
+  var addressInput = newNoticeForm.querySelector('#address');
+  if (status === StatusAddress.inactive) {
+    addressInput.value = (SOURCE_X_COORDINATA_MAIN_PIN + WIDTH_MAIN_PIN * 0.5)
+  + ', '
+  + (SOURCE_Y_COORDINATA_MAIN_PIN + HEIGHT_MAIN_PIN * 0.5);
+  } else if (status === StatusAddress.active) {
+    addressInput.value = (SOURCE_X_COORDINATA_MAIN_PIN + WIDTH_MAIN_PIN * 0.5)
+  + ', '
+  + (SOURCE_Y_COORDINATA_MAIN_PIN + HEIGHT_MAIN_PIN + HEIGHT_SHARP_MAIN_POINT);
+  }
+};
+
+setAddressValue(false);
 
 var similarListPin = document.querySelector('.map__pins');
 
@@ -59,7 +110,7 @@ var createAnnouncement = function () {
 
       offer: {
         title: 'Заголовок объявления',
-        address: coordinateX + ',' + coordinateY,
+        address: coordinateX + ', ' + coordinateY,
         price: getRandomNumberInRange(10000, 100000),
         type: getRandomElement(APARTMENTS),
         rooms: 4,
@@ -100,15 +151,6 @@ var renderPins = function () {
     fragment.appendChild(renderPin(announcements[j]));
   }
   return fragment;
-};
-
-similarListPin.appendChild(renderPins());
-
-var TypeOfHouse = {
-  flat: 'Квартира',
-  bungalo: 'Бунгало',
-  house: 'Дом',
-  palace: 'Дворец'
 };
 
 var renderAnnouncementCard = function (card) {
@@ -158,4 +200,53 @@ var renderAnnouncementCard = function (card) {
   return cardElement;
 };
 
-similarFilters.before(renderAnnouncementCard(announcements[0]));
+var activatePage = function () {
+  map.classList.remove('map--faded');
+  similarListPin.appendChild(renderPins());
+  similarFilters.before(renderAnnouncementCard(announcements[0]));
+  toggleFieldsAvailability(mapFields, false);
+  toggleFieldsAvailability(newNoticeFields, false);
+
+  newNoticeForm.classList.remove('ad-form--disabled');
+};
+
+activationButton.addEventListener('mousedown', function (evt) {
+  if (evt.button === LEFT_MOUSE_BUTTON) {
+    activatePage();
+    setAddressValue(true);
+  }
+});
+
+activationButton.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    activatePage();
+    setAddressValue('active');
+  }
+});
+
+var GuestsInRoom = {
+  1: [2],
+  2: [2, 1],
+  3: [2, 1, 0],
+  100: [3]
+};
+
+var numberOfRooms = newNoticeForm.querySelector('#room_number');
+var numberOfGuests = newNoticeForm.querySelector('#capacity');
+
+var disablesAllElements = function (select) {
+  for (var i = 0; i < select.length; i++) {
+    select.children[i].setAttribute('disabled', 'disabled');
+    select.children[i].removeAttribute('selected', 'selected');
+  }
+};
+
+numberOfRooms.addEventListener('change', function () {
+  var currentVal = numberOfRooms.value;
+  var guests = GuestsInRoom[currentVal];
+  disablesAllElements(numberOfGuests);
+  for (var i = 0; i < guests.length; i++) {
+    numberOfGuests.children[guests[i]].removeAttribute('disabled', 'disabled');
+    numberOfGuests.children[guests[i]].setAttribute('selected', 'selected');
+  }
+});
