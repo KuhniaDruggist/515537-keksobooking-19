@@ -23,8 +23,8 @@
 
   var activatePage = function () {
     map.classList.remove('map--faded');
-    similarListPin.appendChild(window.pins.list());
-    similarFilters.before(window.card.annoucement(window.announcements.list()[0]));
+    similarListPin.appendChild(window.pins.render());
+    similarFilters.before(window.card.render(window.announcements.render()[0]));
     toggleFieldsAvailability(mapFields, false);
     toggleFieldsAvailability(newNoticeFields, false);
 
@@ -32,7 +32,7 @@
   };
 
   activationButton.addEventListener('mousedown', function (evt) {
-    window.utils.isLeftMouse(evt, true);
+    window.utils.isPressLeftMouse(evt, true);
   });
 
   activationButton.addEventListener('keydown', function (evt) {
@@ -40,7 +40,7 @@
   });
 
   window.map = {
-    activPage: activatePage
+    activate: activatePage
   };
 
 })();

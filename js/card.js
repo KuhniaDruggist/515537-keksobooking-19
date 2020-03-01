@@ -59,7 +59,7 @@
   };
 
   window.card = {
-    annoucement: renderAnnouncementCard
+    render: renderAnnouncementCard
   };
 
 })();

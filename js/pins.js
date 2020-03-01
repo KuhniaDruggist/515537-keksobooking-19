@@ -21,14 +21,14 @@
 
   var renderPins = function () {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.announcements.list().length; i++) {
-      fragment.appendChild(renderPin(window.announcements.list()[i]));
+    for (var i = 0; i < window.announcements.render().length; i++) {
+      fragment.appendChild(renderPin(window.announcements.render()[i]));
     }
     return fragment;
   };
 
   window.pins = {
-    list: renderPins
+    render: renderPins
   };
 
 })();

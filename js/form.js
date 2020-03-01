@@ -57,7 +57,7 @@
   });
 
   window.form = {
-    address: setAddressValue
+    setAddressValue: setAddressValue
   };
 
 })();

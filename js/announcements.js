@@ -13,8 +13,8 @@
     var announcementList = [];
     for (var i = 1; i <= MAX_PIN; i++) {
 
-      var coordinateX = window.utils.randomNumberInRange(0, window.utils.mapWidth());
-      var coordinateY = window.utils.randomNumberInRange(130, 630);
+      var coordinateX = window.utils.getRandomNumberInRange(0, window.utils.getMapWidth());
+      var coordinateY = window.utils.getRandomNumberInRange(130, 630);
 
       var announcement = {
         author: {
@@ -24,15 +24,15 @@
         offer: {
           title: 'Заголовок объявления',
           address: coordinateX + ', ' + coordinateY,
-          price: window.utils.randomNumberInRange(10000, 100000),
-          type: window.utils.randomElementFromArray(APARTMENTS),
+          price: window.utils.getRandomNumberInRange(10000, 100000),
+          type: window.utils.getRandomElementFromArray(APARTMENTS),
           rooms: 4,
           guests: 10,
-          checkin: window.utils.randomElementFromArray(TIMES),
-          checkout: window.utils.randomElementFromArray(TIMES),
-          features: window.utils.randomArray(PIN_FEATURES),
+          checkin: window.utils.getRandomElementFromArray(TIMES),
+          checkout: window.utils.getRandomElementFromArray(TIMES),
+          features: window.utils.getRandomArray(PIN_FEATURES),
           description: 'Здесь будет описание вашего уютного жилища',
-          photos: window.utils.randomArray(PIN_PHOTOS),
+          photos: window.utils.getRandomArray(PIN_PHOTOS),
         },
 
         location: {
@@ -46,7 +46,7 @@
   };
 
   window.announcements = {
-    list: createAnnouncement
+    render: createAnnouncement
   };
 
 })();

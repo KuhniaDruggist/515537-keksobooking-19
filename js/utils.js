@@ -8,15 +8,15 @@
 
   var pressLeftMouse = function (evt, status) {
     if (evt.button === Buttons.LEFT_MOUSE_BUTTON) {
-      window.map.activPage();
-      window.form.address(status);
+      window.map.activate();
+      window.form.setAddressValue(status);
     }
   };
 
   var pressEnter = function (evt, status) {
     if (evt.key === Buttons.ENTER_KEY) {
-      window.map.activPage();
-      window.form.address(status);
+      window.map.activate();
+      window.form.setAddressValue(status);
     }
   };
 
@@ -41,12 +41,12 @@
   };
 
   window.utils = {
-    isLeftMouse: pressLeftMouse,
+    isPressLeftMouse: pressLeftMouse,
     isPressEnter: pressEnter,
-    randomElementFromArray: getRandomElementFromArray,
-    randomNumberInRange: getRandomNumberInRange,
-    randomArray: getRandomArray,
-    mapWidth: getMapWidth
+    getRandomElementFromArray: getRandomElementFromArray,
+    getRandomNumberInRange: getRandomNumberInRange,
+    getRandomArray: getRandomArray,
+    getMapWidth: getMapWidth
   };
 
 })();
