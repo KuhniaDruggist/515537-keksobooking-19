@@ -10,10 +10,10 @@
   var similarAnnouncementCardTemplate = document.querySelector('#card')
     .content
     .querySelector('.map__card');
+  var cardElement = similarAnnouncementCardTemplate.cloneNode(true);
+  var buttonClose = cardElement.querySelector('.popup__close');
 
   var renderAnnouncementCard = function (card) {
-    var cardElement = similarAnnouncementCardTemplate.cloneNode(true);
-
     cardElement.querySelector('.popup__avatar').src = card.author.avatar;
     cardElement.querySelector('.popup__title').textContent = card.offer.title;
     cardElement.querySelector('.popup__text--address').textContent = card.offer.address;
@@ -58,8 +58,36 @@
     return cardElement;
   };
 
+  var onCardEscPress = function (evt) {
+    window.utils.isPressEsc(evt, closeCard);
+  };
+
+  var closeCard = function () {
+    cardElement.classList.add('hidden');
+    document.removeEventListener('keydown', onCardEscPress);
+  };
+
+  var openCard = function () {
+    cardElement.classList.remove('hidden');
+  };
+
+  buttonClose.addEventListener('click', function () {
+    closeCard();
+  });
+
+  buttonClose.addEventListener('keydown', function (evt) {
+    window.utils.isPressEnter(evt, closeCard);
+  });
+
+  cardElement.addEventListener('keydown', function (evt) {
+    window.utils.isPressEsc(evt, closeCard);
+  });
+
   window.card = {
-    render: renderAnnouncementCard
+    render: renderAnnouncementCard,
+    open: openCard,
+    close: closeCard,
+    addCondition: onCardEscPress
   };
 
 })();
