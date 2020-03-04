@@ -2,8 +2,8 @@
 (function () {
 
   var TypeOfHouse = {
-    flat: 'Квартира',
     bungalo: 'Бунгало',
+    flat: 'Квартира',
     house: 'Дом',
     palace: 'Дворец'
   };
