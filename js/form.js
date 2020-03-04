@@ -29,10 +29,10 @@
   };
 
   var CostOfHousing = {
-    bungalo: 0,
-    flat: 1000,
-    house: 5000,
-    palace: 10000
+    BUNGALO: 0,
+    FLAT: 1000,
+    HOUSE: 5000,
+    PALACE: 10000
   };
 
   var setAddressValue = function (status) {
@@ -67,10 +67,10 @@
     }
   });
 
-  price.setAttribute('min', CostOfHousing.flat);
-  price.setAttribute('placeholder', CostOfHousing.flat);
+  price.setAttribute('min', CostOfHousing.FLAT);
+  price.setAttribute('placeholder', CostOfHousing.FLAT);
   typeRoom.addEventListener('change', function () {
-    var currentVal = typeRoom.value;
+    var currentVal = typeRoom.value.toUpperCase();
     if (currentVal) {
       price.setAttribute('min', CostOfHousing[currentVal]);
       price.setAttribute('placeholder', CostOfHousing[currentVal]);

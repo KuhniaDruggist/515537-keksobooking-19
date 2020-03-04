@@ -2,10 +2,10 @@
 (function () {
 
   var TypeOfHouse = {
-    bungalo: 'Бунгало',
-    flat: 'Квартира',
-    house: 'Дом',
-    palace: 'Дворец'
+    BUNGALO: 'Бунгало',
+    FLAT: 'Квартира',
+    HOUSE: 'Дом',
+    PALACE: 'Дворец'
   };
   var similarAnnouncementCardTemplate = document.querySelector('#card')
     .content
@@ -21,7 +21,7 @@
     cardElement.querySelector('.popup__text--price')
       .textContent = card.offer.price ? card.offer.price + '₽/ночь' : '';
 
-    cardElement.querySelector('.popup__type').textContent = TypeOfHouse[card.offer.type];
+    cardElement.querySelector('.popup__type').textContent = TypeOfHouse[card.offer.type.toUpperCase()];
 
     cardElement.querySelector('.popup__text--capacity')
       .textContent = (card.offer.rooms && card.offer.guests) ? card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей' : '';
