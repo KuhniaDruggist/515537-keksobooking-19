@@ -28,25 +28,12 @@
     100: [3]
   };
 
-  var TypeOfHouse = {
-    bungalo: 'bungalo',
-    flat: 'flat',
-    house: 'house',
-    palace: 'palace'
-  };
-
   var CostOfHousing = {
     bungalo: 0,
     flat: 1000,
     house: 5000,
     palace: 10000
-  }
-
-  var Time = {
-    12: '12:00',
-    13: '13:00',
-    14: '14:00'
-  }
+  };
 
   var setAddressValue = function (status) {
     var addressInput = newNoticeForm.querySelector('#address');
@@ -87,7 +74,7 @@
     if (currentVal) {
       price.setAttribute('min', CostOfHousing[currentVal]);
       price.setAttribute('placeholder', CostOfHousing[currentVal]);
-    };
+    }
   });
 
   var checkTime = function (act1, act2) {
@@ -99,11 +86,11 @@
 
   checkIn.addEventListener('change', function () {
     checkTime(checkIn, checkOut);
-  })
+  });
 
   checkOut.addEventListener('change', function () {
     checkTime(checkOut, checkIn);
-  })
+  });
 
 
   window.form = {

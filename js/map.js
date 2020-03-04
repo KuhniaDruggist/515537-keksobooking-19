@@ -35,12 +35,12 @@
   var onActButtonMousedown = function (evt) {
     window.utils.isPressLeftMouse(evt, true);
     activationButton.removeEventListener('mousedown', onActButtonMousedown);
-  }
+  };
 
   var onActButtonEnter = function (evt) {
     window.utils.isPressEnterActivationButton(evt, true);
     activationButton.removeEventListener('keydown', onActButtonEnter);
-  }
+  };
 
   activationButton.addEventListener('mousedown', onActButtonMousedown);
   activationButton.addEventListener('keydown', onActButtonEnter);
