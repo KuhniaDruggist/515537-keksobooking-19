@@ -8,6 +8,13 @@
   var SOURCE_Y_COORDINATA_MAIN_PIN = 375;
 
   var newNoticeForm = document.querySelector('.ad-form');
+  var numberOfRooms = newNoticeForm.querySelector('#room_number');
+  var numberOfGuests = newNoticeForm.querySelector('#capacity');
+  var typeRoom = newNoticeForm.querySelector('#type');
+  var price = newNoticeForm.querySelector('#price');
+  var checkIn = newNoticeForm.querySelector('#timein');
+  var checkOut = newNoticeForm.querySelector('#timeout');
+
 
   var StatusAddress = {
     active: true,
@@ -21,8 +28,12 @@
     100: [3]
   };
 
-  var numberOfRooms = newNoticeForm.querySelector('#room_number');
-  var numberOfGuests = newNoticeForm.querySelector('#capacity');
+  var CostOfHousing = {
+    BUNGALO: 0,
+    FLAT: 1000,
+    HOUSE: 5000,
+    PALACE: 10000
+  };
 
   var setAddressValue = function (status) {
     var addressInput = newNoticeForm.querySelector('#address');
@@ -55,6 +66,32 @@
       numberOfGuests.children[guests[i]].setAttribute('selected', 'selected');
     }
   });
+
+  price.setAttribute('min', CostOfHousing.FLAT);
+  price.setAttribute('placeholder', CostOfHousing.FLAT);
+  typeRoom.addEventListener('change', function () {
+    var currentVal = typeRoom.value.toUpperCase();
+    if (currentVal) {
+      price.setAttribute('min', CostOfHousing[currentVal]);
+      price.setAttribute('placeholder', CostOfHousing[currentVal]);
+    }
+  });
+
+  var checkTime = function (act1, act2) {
+    var currentVal = act1.value;
+    if (currentVal) {
+      act2.value = currentVal;
+    }
+  };
+
+  checkIn.addEventListener('change', function () {
+    checkTime(checkIn, checkOut);
+  });
+
+  checkOut.addEventListener('change', function () {
+    checkTime(checkOut, checkIn);
+  });
+
 
   window.form = {
     setAddressValue: setAddressValue

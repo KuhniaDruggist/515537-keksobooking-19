@@ -25,19 +25,25 @@
     map.classList.remove('map--faded');
     similarListPin.appendChild(window.pins.render());
     similarFilters.before(window.card.render(window.announcements.render()[0]));
+    document.addEventListener('keydown', window.card.addCondition);
     toggleFieldsAvailability(mapFields, false);
     toggleFieldsAvailability(newNoticeFields, false);
 
     newNoticeForm.classList.remove('ad-form--disabled');
   };
 
-  activationButton.addEventListener('mousedown', function (evt) {
+  var onActButtonMousedown = function (evt) {
     window.utils.isPressLeftMouse(evt, true);
-  });
+    activationButton.removeEventListener('mousedown', onActButtonMousedown);
+  };
 
-  activationButton.addEventListener('keydown', function (evt) {
-    window.utils.isPressEnter(evt, true);
-  });
+  var onActButtonEnter = function (evt) {
+    window.utils.isPressEnterActivationButton(evt, true);
+    activationButton.removeEventListener('keydown', onActButtonEnter);
+  };
+
+  activationButton.addEventListener('mousedown', onActButtonMousedown);
+  activationButton.addEventListener('keydown', onActButtonEnter);
 
   window.map = {
     activate: activatePage

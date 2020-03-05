@@ -2,8 +2,9 @@
 (function () {
 
   var Buttons = {
+    LEFT_MOUSE_BUTTON: 0,
     ENTER_KEY: 'Enter',
-    LEFT_MOUSE_BUTTON: 0
+    ESC_KEY: 'Escape'
   };
 
   var pressLeftMouse = function (evt, status) {
@@ -13,10 +14,22 @@
     }
   };
 
-  var pressEnter = function (evt, status) {
+  var pressEnterActivationButton = function (evt, status) {
     if (evt.key === Buttons.ENTER_KEY) {
       window.map.activate();
       window.form.setAddressValue(status);
+    }
+  };
+
+  var pressEnter = function (evt, action) {
+    if (evt.key === Buttons.ENTER_KEY) {
+      action();
+    }
+  };
+
+  var pressEsc = function (evt, action) {
+    if (evt.key === Buttons.ESC_KEY) {
+      action();
     }
   };
 
@@ -42,7 +55,9 @@
 
   window.utils = {
     isPressLeftMouse: pressLeftMouse,
+    isPressEnterActivationButton: pressEnterActivationButton,
     isPressEnter: pressEnter,
+    isPressEsc: pressEsc,
     getRandomElementFromArray: getRandomElementFromArray,
     getRandomNumberInRange: getRandomNumberInRange,
     getRandomArray: getRandomArray,
