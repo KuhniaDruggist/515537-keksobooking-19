@@ -6,7 +6,7 @@
 
   var MIN_COORDS_Y = 130;
   var MAX_COORDS_Y = 630;
-  var MIN_COORDS_X= 0;
+  var MIN_COORDS_X = 0;
   var MAX_COORDS_X = 1135;
 
   activationButton.addEventListener('mousedown', function (evt) {
