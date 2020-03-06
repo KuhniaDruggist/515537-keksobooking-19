@@ -5,6 +5,8 @@
   var mapFields = document.querySelector('.map__filters').children;
 
   var activationButton = map.querySelector('.map__pin--main');
+  var START_COORDS_X_MAIN_PIN = activationButton.offsetLeft;
+  var START_COORDS_Y_MAIN_PIN = activationButton.offsetTop;
 
   var newNoticeForm = document.querySelector('.ad-form');
   var newNoticeFields = newNoticeForm.children;
@@ -33,7 +35,7 @@
   };
 
   var onActButtonMousedown = function (evt) {
-    window.utils.isPressLeftMouse(evt, true);
+    window.utils.isPressLeftMouse(evt, true, START_COORDS_X_MAIN_PIN, START_COORDS_Y_MAIN_PIN);
     activationButton.removeEventListener('mousedown', onActButtonMousedown);
   };
 
