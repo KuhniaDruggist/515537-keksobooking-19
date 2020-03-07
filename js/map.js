@@ -23,6 +23,15 @@
   var similarListPin = document.querySelector('.map__pins');
   var similarFilters = document.querySelector('.map__filters-container');
 
+  var onActButtonMousedown = function (evt) {
+    window.utils.isPressLeftMouse(evt, true, START_COORDS_X_MAIN_PIN, START_COORDS_Y_MAIN_PIN);
+  };
+
+  var onActButtonEnter = function (evt) {
+    window.utils.isPressEnterActivationButton(evt, true);
+    activationButton.removeEventListener('keydown', onActButtonEnter);
+  };
+
   var activatePage = function () {
     map.classList.remove('map--faded');
     similarListPin.appendChild(window.pins.render());
@@ -32,16 +41,7 @@
     toggleFieldsAvailability(newNoticeFields, false);
 
     newNoticeForm.classList.remove('ad-form--disabled');
-  };
-
-  var onActButtonMousedown = function (evt) {
-    window.utils.isPressLeftMouse(evt, true, START_COORDS_X_MAIN_PIN, START_COORDS_Y_MAIN_PIN);
     activationButton.removeEventListener('mousedown', onActButtonMousedown);
-  };
-
-  var onActButtonEnter = function (evt) {
-    window.utils.isPressEnterActivationButton(evt, true);
-    activationButton.removeEventListener('keydown', onActButtonEnter);
   };
 
   activationButton.addEventListener('mousedown', onActButtonMousedown);
