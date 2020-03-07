@@ -28,22 +28,22 @@
     PALACE: 10000
   };
 
+  var StatusAddress = {
+    ACTIVE: true,
+    INACTIVE: false
+  };
+
   var setAddressValue = function (status, coordsXMainPin, coordsYMainPin) {
     var WIDTH_MAIN_PIN = 65;
     var HEIGHT_MAIN_PIN = 65;
     var HEIGHT_SHARP_MAIN_POINT = 22;
 
-    var StatusAddress = {
-      active: true,
-      inactive: false
-    };
-
     var addressInput = newNoticeForm.querySelector('#address');
-    if (status === StatusAddress.inactive) {
+    if (status === StatusAddress.INACTIVE) {
       addressInput.value = (coordsXMainPin + WIDTH_MAIN_PIN * 0.5)
     + ', '
     + (coordsYMainPin + HEIGHT_MAIN_PIN * 0.5);
-    } else if (status === StatusAddress.active) {
+    } else if (status === StatusAddress.ACTIVE) {
       addressInput.value = (coordsXMainPin + WIDTH_MAIN_PIN * 0.5)
     + ', '
     + (coordsYMainPin + HEIGHT_MAIN_PIN + HEIGHT_SHARP_MAIN_POINT);
