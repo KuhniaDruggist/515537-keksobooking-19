@@ -14,6 +14,11 @@
   var checkIn = newNoticeForm.querySelector('#timein');
   var checkOut = newNoticeForm.querySelector('#timeout');
 
+  var addressInput = newNoticeForm.querySelector('#address');
+  var WIDTH_MAIN_PIN = 65;
+  var HEIGHT_MAIN_PIN = 65;
+  var HEIGHT_SHARP_MAIN_POINT = 22;
+
   var GuestsInRoom = {
     1: [2],
     2: [2, 1],
@@ -34,20 +39,11 @@
   };
 
   var setAddressValue = function (status, coordsXMainPin, coordsYMainPin) {
-    var WIDTH_MAIN_PIN = 65;
-    var HEIGHT_MAIN_PIN = 65;
-    var HEIGHT_SHARP_MAIN_POINT = 22;
+    var sharpSize = status === StatusAddress.ACTIVE ? HEIGHT_MAIN_PIN +
+    HEIGHT_SHARP_MAIN_POINT : HEIGHT_MAIN_PIN * 0.5;
 
-    var addressInput = newNoticeForm.querySelector('#address');
-    if (status === StatusAddress.INACTIVE) {
-      addressInput.value = (coordsXMainPin + WIDTH_MAIN_PIN * 0.5)
-    + ', '
-    + (coordsYMainPin + HEIGHT_MAIN_PIN * 0.5);
-    } else if (status === StatusAddress.ACTIVE) {
-      addressInput.value = (coordsXMainPin + WIDTH_MAIN_PIN * 0.5)
-    + ', '
-    + (coordsYMainPin + HEIGHT_MAIN_PIN + HEIGHT_SHARP_MAIN_POINT);
-    }
+    addressInput.value = (coordsXMainPin + WIDTH_MAIN_PIN * 0.5) +
+    ', ' + (coordsYMainPin + sharpSize);
   };
 
   setAddressValue(false, START_COORDS_X_MAIN_PIN, START_COORDS_Y_MAIN_PIN);
