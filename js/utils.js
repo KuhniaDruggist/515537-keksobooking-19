@@ -7,10 +7,10 @@
     ESC_KEY: 'Escape'
   };
 
-  var pressLeftMouse = function (evt, status) {
+  var pressLeftMouse = function (evt, status, coordsXMainPin, coordsYMainPin) {
     if (evt.button === Buttons.LEFT_MOUSE_BUTTON) {
       window.map.activate();
-      window.form.setAddressValue(status);
+      window.form.setAddressValue(status, coordsXMainPin, coordsYMainPin);
     }
   };
 

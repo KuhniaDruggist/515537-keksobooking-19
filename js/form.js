@@ -1,11 +1,10 @@
 'use strict';
 (function () {
 
-  var WIDTH_MAIN_PIN = 65;
-  var HEIGHT_MAIN_PIN = 65;
-  var HEIGHT_SHARP_MAIN_POINT = 22;
-  var SOURCE_X_COORDINATA_MAIN_PIN = 570;
-  var SOURCE_Y_COORDINATA_MAIN_PIN = 375;
+  var map = document.querySelector('.map');
+  var activationButton = map.querySelector('.map__pin--main');
+  var START_COORDS_X_MAIN_PIN = activationButton.offsetLeft;
+  var START_COORDS_Y_MAIN_PIN = activationButton.offsetTop;
 
   var newNoticeForm = document.querySelector('.ad-form');
   var numberOfRooms = newNoticeForm.querySelector('#room_number');
@@ -15,11 +14,10 @@
   var checkIn = newNoticeForm.querySelector('#timein');
   var checkOut = newNoticeForm.querySelector('#timeout');
 
-
-  var StatusAddress = {
-    active: true,
-    inactive: false
-  };
+  var addressInput = newNoticeForm.querySelector('#address');
+  var WIDTH_MAIN_PIN = 65;
+  var HEIGHT_MAIN_PIN = 65;
+  var HEIGHT_SHARP_MAIN_POINT = 22;
 
   var GuestsInRoom = {
     1: [2],
@@ -35,20 +33,20 @@
     PALACE: 10000
   };
 
-  var setAddressValue = function (status) {
-    var addressInput = newNoticeForm.querySelector('#address');
-    if (status === StatusAddress.inactive) {
-      addressInput.value = (SOURCE_X_COORDINATA_MAIN_PIN + WIDTH_MAIN_PIN * 0.5)
-    + ', '
-    + (SOURCE_Y_COORDINATA_MAIN_PIN + HEIGHT_MAIN_PIN * 0.5);
-    } else if (status === StatusAddress.active) {
-      addressInput.value = (SOURCE_X_COORDINATA_MAIN_PIN + WIDTH_MAIN_PIN * 0.5)
-    + ', '
-    + (SOURCE_Y_COORDINATA_MAIN_PIN + HEIGHT_MAIN_PIN + HEIGHT_SHARP_MAIN_POINT);
-    }
+  var StatusAddress = {
+    ACTIVE: true,
+    INACTIVE: false
   };
 
-  setAddressValue(false);
+  var setAddressValue = function (status, coordsXMainPin, coordsYMainPin) {
+    var sharpSize = status === StatusAddress.ACTIVE ? HEIGHT_MAIN_PIN +
+    HEIGHT_SHARP_MAIN_POINT : HEIGHT_MAIN_PIN * 0.5;
+
+    addressInput.value = (coordsXMainPin + WIDTH_MAIN_PIN * 0.5) +
+    ', ' + (coordsYMainPin + sharpSize);
+  };
+
+  setAddressValue(false, START_COORDS_X_MAIN_PIN, START_COORDS_Y_MAIN_PIN);
 
   var disablesAllElements = function (select) {
     for (var i = 0; i < select.length; i++) {
