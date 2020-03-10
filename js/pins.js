@@ -26,13 +26,15 @@
     return pinElement;
   };
 
-  var renderPins = function () {
+  var renderPins = function (pins) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.announcements.render().length; i++) {
-      fragment.appendChild(renderPin(window.announcements.render()[i], i));
+    for (var i = 0; i < pins.length; i++) {
+      fragment.appendChild(renderPin(pins[i]));
     }
     return fragment;
   };
+
+  window.backend.getData(renderPins);
 
   window.pins = {
     render: renderPins

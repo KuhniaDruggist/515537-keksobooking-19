@@ -34,7 +34,7 @@
 
   var activatePage = function () {
     map.classList.remove('map--faded');
-    similarListPin.appendChild(window.pins.render());
+    similarListPin.appendChild(window.backend.getData(window.pins.render));
     similarFilters.before(window.card.render(window.announcements.render()[0]));
     document.addEventListener('keydown', window.card.addCondition);
     toggleFieldsAvailability(mapFields, false);
