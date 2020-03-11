@@ -20,8 +20,6 @@
   toggleFieldsAvailability(mapFields, true);
   toggleFieldsAvailability(newNoticeFields, true);
 
-  var similarFilters = document.querySelector('.map__filters-container');
-
   var onActButtonMousedown = function (evt) {
     window.utils.isPressLeftMouse(evt, true, START_COORDS_X_MAIN_PIN, START_COORDS_Y_MAIN_PIN);
   };
