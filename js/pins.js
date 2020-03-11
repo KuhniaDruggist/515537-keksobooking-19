@@ -4,6 +4,7 @@
   var X_AXIS_OFFSET = 25;
   var Y_AXIS_OFFSET = 70;
 
+  var similarListPin = document.querySelector('.map__pins');
   var similarPinTemplate = document.querySelector('#pin')
   .content
   .querySelector('.map__pin');
@@ -17,7 +18,7 @@
     pinElement.querySelector('img').alt = pin.offer.title;
     pinElement.addEventListener('click', function () {
       window.card.open();
-      window.card.render(window.announcements.render()[number]);
+      window.backend.getData(window.card.render()[number]);
       pinElement.addEventListener('keydown', function (evt) {
         window.utils.isPressEsc(evt, window.card.close);
       });
@@ -28,13 +29,11 @@
 
   var renderPins = function (pins) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < pins.length; i++) {
-      fragment.appendChild(renderPin(pins[i]));
+    for (var i = 0; i < pins.length - 1; i++) {
+      fragment.appendChild(renderPin(pins[i], i));
     }
-    return fragment;
+    similarListPin.appendChild(fragment);
   };
-
-  window.backend.getData(renderPins);
 
   window.pins = {
     render: renderPins

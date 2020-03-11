@@ -20,7 +20,6 @@
   toggleFieldsAvailability(mapFields, true);
   toggleFieldsAvailability(newNoticeFields, true);
 
-  var similarListPin = document.querySelector('.map__pins');
   var similarFilters = document.querySelector('.map__filters-container');
 
   var onActButtonMousedown = function (evt) {
@@ -34,8 +33,8 @@
 
   var activatePage = function () {
     map.classList.remove('map--faded');
-    similarListPin.appendChild(window.backend.getData(window.pins.render));
-    similarFilters.before(window.card.render(window.announcements.render()[0]));
+    window.backend.getData(window.pins.render);
+    similarFilters.before(window.backend.getData(window.card.render()[0]));
     document.addEventListener('keydown', window.card.addCondition);
     toggleFieldsAvailability(mapFields, false);
     toggleFieldsAvailability(newNoticeFields, false);
