@@ -7,14 +7,14 @@
 
   var RESPONSE_TYPE = 'json';
 
-  var load = function (onLoad) {
+  var load = function (onLoad, number) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = RESPONSE_TYPE;
 
     xhr.open('GET', ServerLinks.URL_GET);
 
     xhr.addEventListener('load', function () {
-      onLoad(xhr.response);
+      onLoad(xhr.response, number);
     });
 
     xhr.send();

@@ -17,8 +17,8 @@
     pinElement.querySelector('img').src = pin.author.avatar;
     pinElement.querySelector('img').alt = pin.offer.title;
     pinElement.addEventListener('click', function () {
+      window.backend.getData(window.card.render, number);
       window.card.open();
-      window.backend.getData(window.card.render()[number]);
       pinElement.addEventListener('keydown', function (evt) {
         window.utils.isPressEsc(evt, window.card.close);
       });
