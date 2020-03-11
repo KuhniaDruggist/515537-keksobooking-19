@@ -31,8 +31,13 @@
 
   var activatePage = function () {
     map.classList.remove('map--faded');
-    window.backend.getData(window.pins.render);
-    window.backend.getData(window.card.render, 0);
+
+    var cachedPins = [];
+    window.backend.getData(function (pins) {
+      cachedPins = pins;
+      window.pins.render(cachedPins);
+    });
+
     document.addEventListener('keydown', window.card.addCondition);
     toggleFieldsAvailability(mapFields, false);
     toggleFieldsAvailability(newNoticeFields, false);
