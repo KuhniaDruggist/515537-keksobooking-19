@@ -7,6 +7,8 @@
     HOUSE: 'Дом',
     PALACE: 'Дворец'
   };
+
+  var similarFilters = document.querySelector('.map__filters-container');
   var similarAnnouncementCardTemplate = document.querySelector('#card')
     .content
     .querySelector('.map__card');
@@ -55,7 +57,7 @@
     }
 
     cardElement.querySelector('.popup__description').textContent = card.offer.description;
-    return cardElement;
+    similarFilters.prepend(cardElement);
   };
 
   var onCardEscPress = function (evt) {

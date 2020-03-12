@@ -20,9 +20,6 @@
   toggleFieldsAvailability(mapFields, true);
   toggleFieldsAvailability(newNoticeFields, true);
 
-  var similarListPin = document.querySelector('.map__pins');
-  var similarFilters = document.querySelector('.map__filters-container');
-
   var onActButtonMousedown = function (evt) {
     window.utils.isPressLeftMouse(evt, true, START_COORDS_X_MAIN_PIN, START_COORDS_Y_MAIN_PIN);
   };
@@ -34,8 +31,13 @@
 
   var activatePage = function () {
     map.classList.remove('map--faded');
-    similarListPin.appendChild(window.pins.render());
-    similarFilters.before(window.card.render(window.announcements.render()[0]));
+
+    var cachedPins = [];
+    window.backend.getData(function (pins) {
+      cachedPins = pins;
+      window.pins.render(cachedPins);
+    });
+
     document.addEventListener('keydown', window.card.addCondition);
     toggleFieldsAvailability(mapFields, false);
     toggleFieldsAvailability(newNoticeFields, false);
