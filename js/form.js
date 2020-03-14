@@ -2,11 +2,13 @@
 (function () {
 
   var map = document.querySelector('.map');
+
   var activationButton = map.querySelector('.map__pin--main');
   var START_COORDS_X_MAIN_PIN = activationButton.offsetLeft;
   var START_COORDS_Y_MAIN_PIN = activationButton.offsetTop;
 
   var newNoticeForm = document.querySelector('.ad-form');
+
   var numberOfRooms = newNoticeForm.querySelector('#room_number');
   var numberOfGuests = newNoticeForm.querySelector('#capacity');
   var typeRoom = newNoticeForm.querySelector('#type');
@@ -90,6 +92,10 @@
     checkTime(checkOut, checkIn);
   });
 
+  newNoticeForm.addEventListener('submit', function (evt) {
+    window.backend.sentData(new FormData(newNoticeForm), window.map.inactivate, window.message.openError);
+    evt.preventDefault();
+  });
 
   window.form = {
     setAddressValue: setAddressValue
