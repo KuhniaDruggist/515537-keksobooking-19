@@ -14,10 +14,10 @@
     }
   };
 
-  var pressEnterActivationButton = function (evt, status) {
+  var pressEnterActivationButton = function (evt, status, coordsXMainPin, coordsYMainPin) {
     if (evt.key === Buttons.ENTER_KEY) {
       window.map.activate();
-      window.form.setAddressValue(status);
+      window.form.setAddressValue(status, coordsXMainPin, coordsYMainPin);
     }
   };
 
