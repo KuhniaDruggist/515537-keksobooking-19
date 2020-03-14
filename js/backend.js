@@ -10,6 +10,7 @@
     OK: 200
   };
 
+  var TIMEOUT_IN_MS = 10000;
   var RESPONSE_TYPE = 'json';
 
   var load = function (onLoad) {
@@ -38,6 +39,16 @@
         onError();
       }
     });
+
+    xhr.addEventListener('error', function () {
+      onError();
+    });
+
+    xhr.addEventListener('timeout', function () {
+      onError();
+    });
+
+    xhr.timeout = TIMEOUT_IN_MS;
 
     xhr.send(data);
   };
