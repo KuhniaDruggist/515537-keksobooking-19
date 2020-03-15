@@ -25,7 +25,7 @@
   };
 
   var onActButtonEnter = function (evt) {
-    window.utils.isPressEnterActivationButton(evt, true);
+    window.utils.isPressEnterActivationButton(evt, true, START_COORDS_X_MAIN_PIN, START_COORDS_Y_MAIN_PIN);
     activationButton.removeEventListener('keydown', onActButtonEnter);
   };
 
@@ -46,11 +46,35 @@
     activationButton.removeEventListener('mousedown', onActButtonMousedown);
   };
 
+  var inactivatePage = function () {
+    newNoticeForm.reset();
+
+    map.classList.add('map--faded');
+    newNoticeForm.classList.add('ad-form--disabled');
+
+    window.map.inactivateFields(mapFields, true);
+    window.map.inactivateFields(newNoticeFields, true);
+
+    window.form.setAddressValue(false, START_COORDS_X_MAIN_PIN, START_COORDS_Y_MAIN_PIN);
+
+    window.pins.remove();
+    window.card.remove();
+
+    window.message.openSuccess();
+
+    activationButton.addEventListener('mousedown', window.map.pressMouse);
+    activationButton.addEventListener('keydown', window.map.pressButton);
+  };
+
   activationButton.addEventListener('mousedown', onActButtonMousedown);
   activationButton.addEventListener('keydown', onActButtonEnter);
 
   window.map = {
-    activate: activatePage
+    activate: activatePage,
+    inactivate: inactivatePage,
+    inactivateFields: toggleFieldsAvailability,
+    pressButton: onActButtonEnter,
+    pressMouse: onActButtonMousedown
   };
 
 })();

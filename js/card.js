@@ -60,6 +60,10 @@
     similarFilters.prepend(cardElement);
   };
 
+  var removeAnnouncementCard = function () {
+    cardElement.remove();
+  };
+
   var onCardEscPress = function (evt) {
     window.utils.isPressEsc(evt, closeCard);
   };
@@ -87,6 +91,7 @@
 
   window.card = {
     render: renderAnnouncementCard,
+    remove: removeAnnouncementCard,
     open: openCard,
     close: closeCard,
     addCondition: onCardEscPress
