@@ -31,7 +31,8 @@
 
   var renderPins = function (pins) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < MAX_NUMBER_OF_PIN; i++) {
+    var takeNumber = pins.length > MAX_NUMBER_OF_PIN ? MAX_NUMBER_OF_PIN : pins.length;
+    for (var i = 0; i < takeNumber; i++) {
       fragment.appendChild(renderPin(pins[i], i));
     }
     similarListPin.appendChild(fragment);
