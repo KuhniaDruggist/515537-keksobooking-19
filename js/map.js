@@ -57,15 +57,13 @@
 
     window.form.setAddressValue(false, START_COORDS_X_MAIN_PIN, START_COORDS_Y_MAIN_PIN);
 
-    activationButton.addEventListener('mousedown', window.map.pressMouse);
-    activationButton.addEventListener('keydown', window.map.pressButton);
-
-    var newPins = map.querySelectorAll('button[class="map__pin"]');
-    Array.from(newPins).forEach(function (n) {
-      n.remove();
-    });
+    window.pins.remove();
+    window.card.remove();
 
     window.message.openSuccess();
+
+    activationButton.addEventListener('mousedown', window.map.pressMouse);
+    activationButton.addEventListener('keydown', window.map.pressButton);
   };
 
   activationButton.addEventListener('mousedown', onActButtonMousedown);

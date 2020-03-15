@@ -37,8 +37,16 @@
     similarListPin.appendChild(fragment);
   };
 
+  var removePins = function () {
+    var newPins = similarListPin.querySelectorAll('button[class="map__pin"]');
+    Array.from(newPins).forEach(function (n) {
+      n.remove();
+    });
+  };
+
   window.pins = {
-    render: renderPins
+    render: renderPins,
+    remove: removePins
   };
 
 })();

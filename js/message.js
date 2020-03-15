@@ -16,36 +16,33 @@
   messageContainer.appendChild(messageSuccess).classList.add('hidden');
   messageContainer.appendChild(messageError).classList.add('hidden');
 
-  var onSuccess = function () {
+  var MessageTypes = {
+    SUCCESS: messageSuccess,
+    ERROR: messageError
+  };
+
+  var showMessage = function (messageType) {
     var onMessageEscPress = function (evt) {
-      window.utils.isPressEsc(evt, closeSuccess);
+      window.utils.isPressEsc(evt, closeMessage);
     };
 
-    var closeSuccess = function () {
-      messageSuccess.classList.add('hidden');
+    var closeMessage = function () {
+      messageType.classList.add('hidden');
       document.removeEventListener('keydown', onMessageEscPress);
-      document.removeEventListener('click', closeSuccess);
+      document.removeEventListener('click', closeMessage);
     };
 
-    messageSuccess.classList.remove('hidden');
+    messageType.classList.remove('hidden');
     document.addEventListener('keydown', onMessageEscPress);
-    document.addEventListener('click', closeSuccess);
+    document.addEventListener('click', closeMessage);
+  };
+
+  var onSuccess = function () {
+    showMessage(MessageTypes.SUCCESS);
   };
 
   var onError = function () {
-    var onMessageEscPress = function (evt) {
-      window.utils.isPressEsc(evt, closeError);
-    };
-
-    var closeError = function () {
-      messageError.classList.add('hidden');
-      document.removeEventListener('keydown', onMessageEscPress);
-      document.removeEventListener('click', closeError);
-    };
-
-    messageError.classList.remove('hidden');
-    document.addEventListener('keydown', onMessageEscPress);
-    document.addEventListener('click', closeError);
+    showMessage(MessageTypes.ERROR);
   };
 
   window.message = {

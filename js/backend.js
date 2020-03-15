@@ -6,6 +6,11 @@
     URL_POST: 'https://js.dump.academy/keksobooking'
   };
 
+  var RequestTypes = {
+    GET: 'GET',
+    POST: 'POST'
+  };
+
   var StatusCodes = {
     OK: 200
   };
@@ -13,44 +18,31 @@
   var TIMEOUT_IN_MS = 10000;
   var RESPONSE_TYPE = 'json';
 
-  var load = function (onLoad) {
+  var createRequest = function (requestTypes, URL, onLoad, onError, data) {
     var xhr = new XMLHttpRequest();
+    xhr.timeout = TIMEOUT_IN_MS;
     xhr.responseType = RESPONSE_TYPE;
 
-    xhr.open('GET', ServerLinks.URL_GET);
+    xhr.open(requestTypes, URL);
 
     xhr.addEventListener('load', function () {
-      onLoad(xhr.response);
+      var statusLoad = xhr.status === StatusCodes.OK ? onLoad(xhr.response) : onError();
+      return statusLoad;
     });
 
-    xhr.send();
+    xhr.addEventListener('error', onError);
+
+    xhr.addEventListener('timeout', onError);
+
+    xhr.send(data);
+  };
+
+  var load = function (onLoad) {
+    createRequest(RequestTypes.GET, ServerLinks.URL_GET, onLoad);
   };
 
   var save = function (data, onLoad, onError) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = RESPONSE_TYPE;
-
-    xhr.open('POST', ServerLinks.URL_POST);
-
-    xhr.addEventListener('load', function () {
-      if (xhr.status === StatusCodes.OK) {
-        onLoad(xhr.response);
-      } else {
-        onError();
-      }
-    });
-
-    xhr.addEventListener('error', function () {
-      onError();
-    });
-
-    xhr.addEventListener('timeout', function () {
-      onError();
-    });
-
-    xhr.timeout = TIMEOUT_IN_MS;
-
-    xhr.send(data);
+    createRequest(RequestTypes.POST, ServerLinks.URL_POST, onLoad, onError, data);
   };
 
   window.backend = {
