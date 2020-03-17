@@ -6,18 +6,17 @@
 
   var filtersAnnouncement = function (announcements) {
     housingType.addEventListener('change', function () {
-      if (housingType.value === 'any') {
-        window.pins.remove();
-        window.card.remove();
-        window.pins.render(announcements);
-      } else {
-        var newListAnnouncements = announcements.filter(function (pin) {
-          return pin.offer.type === housingType.value;
-        });
-        window.pins.remove();
-        window.card.remove();
-        window.pins.render(newListAnnouncements);
-      }
+
+      var listByTypeOfHousing = announcements.filter(function (pin) {
+        if (housingType.value === 'any') {
+          return pin.offer.type;
+        }
+        return pin.offer.type === housingType.value;
+      });
+
+      window.pins.remove();
+      window.card.remove();
+      window.pins.render(listByTypeOfHousing);
     });
   };
 
