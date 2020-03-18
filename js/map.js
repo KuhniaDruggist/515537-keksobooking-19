@@ -12,8 +12,8 @@
   var newNoticeFields = newNoticeForm.children;
 
   var toggleFieldsAvailability = function (elements, status) {
-    Array.from(elements).forEach(function (n) {
-      n.disabled = status;
+    Array.from(elements).forEach(function (element) {
+      element.disabled = status;
     });
   };
 
@@ -35,7 +35,7 @@
     var cachedPins = [];
     window.backend.getData(function (pins) {
       cachedPins = pins;
-      window.pins.render(cachedPins);
+      window.sort.filters(cachedPins);
     });
 
     document.addEventListener('keydown', window.card.addCondition);
