@@ -35,7 +35,6 @@
     var cachedPins = [];
     window.backend.getData(function (pins) {
       cachedPins = pins;
-      window.pins.render(cachedPins);
       window.sort.filters(cachedPins);
     });
 
