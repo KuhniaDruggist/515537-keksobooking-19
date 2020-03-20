@@ -14,8 +14,8 @@
   var renderPin = function (pin) {
     var pinElement = similarPinTemplate.cloneNode(true);
 
-    pinElement.style.left = pin.location.x + X_AXIS_OFFSET + 'px';
-    pinElement.style.top = pin.location.y + Y_AXIS_OFFSET + 'px';
+    pinElement.style.left = pin.location.x - X_AXIS_OFFSET + 'px';
+    pinElement.style.top = pin.location.y - Y_AXIS_OFFSET + 'px';
     pinElement.querySelector('img').src = pin.author.avatar;
     pinElement.querySelector('img').alt = pin.offer.title;
     pinElement.addEventListener('click', function () {
