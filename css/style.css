@@ -1249,3 +1249,8 @@ fieldset {
   outline: none;
   opacity: 0.6;
 }
+
+.housing__photo {
+  width: 70px;
+  height: 70px;
+}
