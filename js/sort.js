@@ -80,9 +80,15 @@
   var filtersAnnouncement = function (announcements) {
     window.pins.render(announcements);
     filterList.addEventListener('change', function () {
-      window.pins.remove();
-      window.card.remove();
-      window.pins.render(filterPinsData(announcements));
+      var lastTimeout;
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        window.pins.remove();
+        window.card.remove();
+        window.pins.render(filterPinsData(announcements));
+      }, 500);
     });
   };
 
