@@ -1,6 +1,21 @@
 'use strict';
 (function () {
 
+  var filterList = document.querySelector('.map__filters');
+  var housingType = filterList.querySelector('#housing-type');
+  var housingPrice = filterList.querySelector('#housing-price');
+  var housingRooms = filterList.querySelector('#housing-rooms');
+  var housingGuests = filterList.querySelector('#housing-guests');
+
+  var Features = {
+    WIFI: filterList.querySelector('#filter-wifi'),
+    DISHWASHER: filterList.querySelector('#filter-dishwasher'),
+    PARKING: filterList.querySelector('#filter-parking'),
+    WASHER: filterList.querySelector('#filter-washer'),
+    ELEVATOR: filterList.querySelector('#filter-elevator'),
+    CONDITIONER: filterList.querySelector('#filter-conditioner')
+  };
+
   var HousingTypeFildValue = {
     ANY: 'any',
     MIDDLE: 'middle',
@@ -8,51 +23,27 @@
     HIGH: 'high'
   };
 
-  var filterList = document.querySelector('.map__filters');
-  var housingType = filterList.querySelector('#housing-type');
-  var housingPrice = filterList.querySelector('#housing-price');
-  var housingRooms = filterList.querySelector('#housing-rooms');
-  var housingGuests = filterList.querySelector('#housing-guests');
-  var filterWifi = filterList.querySelector('#filter-wifi');
-  var filterDishwasher = filterList.querySelector('#filter-dishwasher');
-  var filterParking = filterList.querySelector('#filter-parking');
-  var filterWasher = filterList.querySelector('#filter-washer');
-  var filterElevator = filterList.querySelector('#filter-elevator');
-  var filterConditioner = filterList.querySelector('#filter-conditioner');
-
-
   var getFilterType = function (pin) {
-    if (housingType.value === HousingTypeFildValue.ANY) {
-      return pin.offer.type;
-    }
-    return pin.offer.type === housingType.value;
+    return housingType.value === HousingTypeFildValue.ANY || pin.offer.type === housingType.value;
   };
 
   var getFilterPrice = function (pin) {
-    if (housingPrice.value === HousingTypeFildValue.ANY) {
-      return pin.offer.price;
-    } else if (housingPrice.value === HousingTypeFildValue.MIDDLE) {
+    if (housingPrice.value === HousingTypeFildValue.MIDDLE) {
       return pin.offer.price >= 10000 && pin.offer.price <= 50000;
     } else if (housingPrice.value === HousingTypeFildValue.LOW) {
       return pin.offer.price < 10000;
     } else if (housingPrice.value === HousingTypeFildValue.HIGH) {
       return pin.offer.price > 50000;
     }
-    return pin.offer.price;
+    return housingPrice.value === HousingTypeFildValue.ANY;
   };
 
   var getFilterRooms = function (pin) {
-    if (housingRooms.value === HousingTypeFildValue.ANY) {
-      return String(pin.offer.rooms);
-    }
-    return String(pin.offer.rooms) === housingRooms.value;
+    return housingRooms.value === HousingTypeFildValue.ANY || pin.offer.rooms.toString() === housingRooms.value;
   };
 
   var getFilterGuests = function (pin) {
-    if (housingGuests.value === HousingTypeFildValue.ANY) {
-      return String(pin.offer.guests);
-    }
-    return String(pin.offer.guests) === housingGuests.value;
+    return housingGuests.value === HousingTypeFildValue.ANY || pin.offer.guests.toString() === housingGuests.value;
   };
 
   var filterCheck = function (fild, arr) {
@@ -64,12 +55,12 @@
   var getFilterFeature = function (pin) {
     var featuresList = [];
 
-    filterCheck(filterWifi, featuresList);
-    filterCheck(filterDishwasher, featuresList);
-    filterCheck(filterParking, featuresList);
-    filterCheck(filterWasher, featuresList);
-    filterCheck(filterElevator, featuresList);
-    filterCheck(filterConditioner, featuresList);
+    filterCheck(Features.WIFI, featuresList);
+    filterCheck(Features.DISHWASHER, featuresList);
+    filterCheck(Features.PARKING, featuresList);
+    filterCheck(Features.WASHER, featuresList);
+    filterCheck(Features.ELEVATOR, featuresList);
+    filterCheck(Features.CONDITIONER, featuresList);
 
     for (var i = 0; i < featuresList.length; i++) {
       if (pin.offer.features.indexOf(featuresList[i]) === -1) {
