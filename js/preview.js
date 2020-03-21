@@ -1,4 +1,4 @@
-'user strict';
+'use strict';
 (function () {
 
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
@@ -14,7 +14,7 @@
     var fileName = file.name.toLowerCase();
 
     var matches = FILE_TYPES.some(function (it) {
-     return fileName.endsWith(it);
+      return fileName.endsWith(it);
     });
 
     if (matches) {
@@ -30,14 +30,14 @@
 
   var downloadAvatar = function () {
     downloadImg(chooserAvatar, previewAvatar);
-  }
+  };
 
   var downloadHousingPhoto = function () {
-    var createElement = document.createElement('img')
+    var createElement = document.createElement('img');
     createElement.classList.add('housing__photo');
     var img = previewHousingPhoto.appendChild(createElement);
     downloadImg(chooserHousingPhoto, img);
-  }
+  };
 
   chooserAvatar.addEventListener('change', downloadAvatar);
   chooserHousingPhoto.addEventListener('change', downloadHousingPhoto);
