@@ -1,13 +1,13 @@
 'use strict';
 (function () {
 
-  var map = document.querySelector('.map');
-  var activationButton = map.querySelector('.map__pin--main');
-
   var MIN_COORDS_Y = 130;
   var MAX_COORDS_Y = 630;
   var MIN_COORDS_X = 0;
   var MAX_COORDS_X = 1135;
+
+  var map = document.querySelector('.map');
+  var activationButton = map.querySelector('.map__pin--main');
 
   activationButton.addEventListener('mousedown', function (evt) {
     evt.preventDefault();

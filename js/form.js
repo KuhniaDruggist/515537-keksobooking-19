@@ -1,11 +1,16 @@
 'use strict';
 (function () {
 
+  var WIDTH_MAIN_PIN = 65;
+  var HEIGHT_MAIN_PIN = 65;
+  var HEIGHT_SHARP_MAIN_POINT = 22;
+
+  var START_COORDS_X_MAIN_PIN = activationButton.offsetLeft;
+  var START_COORDS_Y_MAIN_PIN = activationButton.offsetTop;
+
   var map = document.querySelector('.map');
 
   var activationButton = map.querySelector('.map__pin--main');
-  var START_COORDS_X_MAIN_PIN = activationButton.offsetLeft;
-  var START_COORDS_Y_MAIN_PIN = activationButton.offsetTop;
 
   var newNoticeForm = document.querySelector('.ad-form');
 
@@ -17,9 +22,6 @@
   var checkOut = newNoticeForm.querySelector('#timeout');
 
   var addressInput = newNoticeForm.querySelector('#address');
-  var WIDTH_MAIN_PIN = 65;
-  var HEIGHT_MAIN_PIN = 65;
-  var HEIGHT_SHARP_MAIN_POINT = 22;
 
   var GuestsInRoom = {
     1: [2],

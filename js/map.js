@@ -1,12 +1,13 @@
 'use strict';
 (function () {
 
+  var START_COORDS_X_MAIN_PIN = activationButton.offsetLeft;
+  var START_COORDS_Y_MAIN_PIN = activationButton.offsetTop;
+
   var map = document.querySelector('.map');
   var mapFields = document.querySelector('.map__filters').children;
 
   var activationButton = map.querySelector('.map__pin--main');
-  var START_COORDS_X_MAIN_PIN = activationButton.offsetLeft;
-  var START_COORDS_Y_MAIN_PIN = activationButton.offsetTop;
 
   var newNoticeForm = document.querySelector('.ad-form');
   var newNoticeFields = newNoticeForm.children;

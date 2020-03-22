@@ -1,6 +1,9 @@
 'use strict';
 (function () {
 
+  var TIMEOUT_IN_MS = 10000;
+  var RESPONSE_TYPE = 'json';
+
   var ServerLinks = {
     URL_GET: 'https://js.dump.academy/keksobooking/data',
     URL_POST: 'https://js.dump.academy/keksobooking'
@@ -14,9 +17,6 @@
   var StatusCodes = {
     OK: 200
   };
-
-  var TIMEOUT_IN_MS = 10000;
-  var RESPONSE_TYPE = 'json';
 
   var createRequest = function (requestTypes, URL, onLoad, onError, data) {
     var xhr = new XMLHttpRequest();
