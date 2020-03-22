@@ -22,6 +22,8 @@
 
   var addressInput = newNoticeForm.querySelector('#address');
 
+  var resetButton = newNoticeForm.querySelector('.ad-form__reset');
+
   var GuestsInRoom = {
     1: [2],
     2: [2, 1],
@@ -99,9 +101,19 @@
     checkTime(checkOut, checkIn);
   });
 
+  var onButtonSubmitClick = function () {
+    window.message.openSuccess();
+    window.map.inactivate();
+  };
+
   newNoticeForm.addEventListener('submit', function (evt) {
-    window.backend.sentData(new FormData(newNoticeForm), window.map.inactivate, window.message.openError);
+    window.backend.sentData(new FormData(newNoticeForm), onButtonSubmitClick, window.message.openError);
     evt.preventDefault();
+  });
+
+  resetButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    window.map.inactivate();
   });
 
   window.form = {
