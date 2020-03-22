@@ -28,18 +28,18 @@
     }
   };
 
-  var downloadAvatar = function () {
+  var onButtonAvatarClick = function () {
     downloadImg(chooserAvatar, previewAvatar);
   };
 
-  var downloadHousingPhoto = function () {
+  var onButtonHousingPhotoClick = function () {
     var createElement = document.createElement('img');
     createElement.classList.add('housing__photo');
     var img = previewHousingPhoto.appendChild(createElement);
     downloadImg(chooserHousingPhoto, img);
   };
 
-  chooserAvatar.addEventListener('change', downloadAvatar);
-  chooserHousingPhoto.addEventListener('change', downloadHousingPhoto);
+  chooserAvatar.addEventListener('change', onButtonAvatarClick);
+  chooserHousingPhoto.addEventListener('change', onButtonHousingPhotoClick);
 
 })();

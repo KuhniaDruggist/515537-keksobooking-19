@@ -23,18 +23,18 @@
 
   var showMessage = function (messageType) {
     var onMessageEscPress = function (evt) {
-      window.utils.isPressEsc(evt, closeMessage);
+      window.utils.isPressEsc(evt, onMessageClick);
     };
 
-    var closeMessage = function () {
+    var onMessageClick = function () {
       messageType.classList.add('hidden');
       document.removeEventListener('keydown', onMessageEscPress);
-      document.removeEventListener('click', closeMessage);
+      document.removeEventListener('click', onMessageClick);
     };
 
     messageType.classList.remove('hidden');
     document.addEventListener('keydown', onMessageEscPress);
-    document.addEventListener('click', closeMessage);
+    document.addEventListener('click', onMessageClick);
   };
 
   var onSuccess = function () {

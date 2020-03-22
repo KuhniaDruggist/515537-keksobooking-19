@@ -94,8 +94,7 @@
     render: renderAnnouncementCard,
     remove: removeAnnouncementCard,
     open: openCard,
-    close: closeCard,
-    addCondition: onCardEscPress
+    close: closeCard
   };
 
 })();

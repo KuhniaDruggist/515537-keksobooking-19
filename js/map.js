@@ -38,12 +38,12 @@
       window.sort.filters(cachedPins);
     });
 
-    document.addEventListener('keydown', window.card.addCondition);
     toggleFieldsAvailability(mapFields, false);
     toggleFieldsAvailability(newNoticeFields, false);
 
     newNoticeForm.classList.remove('ad-form--disabled');
     activationButton.removeEventListener('mousedown', onActButtonMousedown);
+    activationButton.removeEventListener('keydown', onActButtonEnter);
   };
 
   var inactivatePage = function () {
@@ -62,8 +62,8 @@
 
     window.message.openSuccess();
 
-    activationButton.addEventListener('mousedown', window.map.pressMouse);
-    activationButton.addEventListener('keydown', window.map.pressButton);
+    activationButton.addEventListener('mousedown', onActButtonMousedown);
+    activationButton.addEventListener('keydown', onActButtonEnter);
   };
 
   activationButton.addEventListener('mousedown', onActButtonMousedown);
@@ -72,9 +72,7 @@
   window.map = {
     activate: activatePage,
     inactivate: inactivatePage,
-    inactivateFields: toggleFieldsAvailability,
-    pressButton: onActButtonEnter,
-    pressMouse: onActButtonMousedown
+    inactivateFields: toggleFieldsAvailability
   };
 
 })();
