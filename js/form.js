@@ -58,7 +58,7 @@
     }
   };
 
-  numberOfRooms.addEventListener('change', function () {
+  var checkRoomsAndGuests = function () {
     var currentVal = numberOfRooms.value;
     var guests = GuestsInRoom[currentVal];
     disablesAllElements(numberOfGuests);
@@ -66,6 +66,12 @@
       numberOfGuests.children[guests[i]].removeAttribute('disabled', 'disabled');
       numberOfGuests.children[guests[i]].setAttribute('selected', 'selected');
     }
+  };
+
+  checkRoomsAndGuests();
+
+  numberOfRooms.addEventListener('change', function () {
+    checkRoomsAndGuests();
   });
 
   price.setAttribute('min', CostOfHousing.FLAT);
