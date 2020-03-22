@@ -2,13 +2,14 @@
 (function () {
 
   var WIDTH_MAIN_PIN = 65;
+  var HALF_PART = 0.5;
 
   var MIN_COORDS_Y = 130;
   var MAX_COORDS_Y = 630;
 
   var map = document.querySelector('.map');
-  var minCoordsX = -WIDTH_MAIN_PIN * 0.5;
-  var maxCoordsX = map.offsetWidth - WIDTH_MAIN_PIN * 0.5;
+  var minCoordsX = -WIDTH_MAIN_PIN * HALF_PART;
+  var maxCoordsX = map.offsetWidth - WIDTH_MAIN_PIN * HALF_PART;
   var activationButton = map.querySelector('.map__pin--main');
 
   activationButton.addEventListener('mousedown', function (evt) {
