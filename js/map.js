@@ -52,6 +52,9 @@
     map.classList.add('map--faded');
     newNoticeForm.classList.add('ad-form--disabled');
 
+    activationButton.style.left = startCoordsXMainPin + 'px';
+    activationButton.style.top = startCoordsYMainPin + 'px';
+
     window.map.inactivateFields(mapFields, true);
     window.map.inactivateFields(newNoticeFields, true);
 
