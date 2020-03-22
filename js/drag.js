@@ -1,12 +1,14 @@
 'use strict';
 (function () {
 
+  var WIDTH_MAIN_PIN = 65;
+
   var MIN_COORDS_Y = 130;
   var MAX_COORDS_Y = 630;
-  var MIN_COORDS_X = 0;
-  var MAX_COORDS_X = 1135;
 
   var map = document.querySelector('.map');
+  var minCoordsX = - WIDTH_MAIN_PIN * 0.5;
+  var maxCoordsX = map.offsetWidth - WIDTH_MAIN_PIN * 0.5;
   var activationButton = map.querySelector('.map__pin--main');
 
   activationButton.addEventListener('mousedown', function (evt) {
@@ -38,7 +40,7 @@
         activationButton.style.top = (newCoordsY) + 'px';
       }
 
-      if (newCoordsX >= MIN_COORDS_X && newCoordsX <= MAX_COORDS_X) {
+      if (newCoordsX >= minCoordsX && newCoordsX <= maxCoordsX) {
         activationButton.style.left = (newCoordsX) + 'px';
       }
 
