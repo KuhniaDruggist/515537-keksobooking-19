@@ -60,8 +60,6 @@
     window.pins.remove();
     window.card.remove();
 
-    window.message.openSuccess();
-
     activationButton.addEventListener('mousedown', onActButtonMousedown);
     activationButton.addEventListener('keydown', onActButtonEnter);
   };
