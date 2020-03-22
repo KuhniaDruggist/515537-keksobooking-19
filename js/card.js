@@ -75,6 +75,7 @@
 
   var openCard = function () {
     cardElement.classList.remove('hidden');
+    document.addEventListener('keydown', onCardEscPress);
   };
 
   buttonClose.addEventListener('click', function () {
